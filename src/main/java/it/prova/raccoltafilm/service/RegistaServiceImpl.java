@@ -96,7 +96,27 @@ public class RegistaServiceImpl implements RegistaService {
 
 	@Override
 	public void rimuovi(Long idRegista) throws Exception {
-		// TODO Auto-generated method stub
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+		try {
+
+			entityManager.getTransaction().begin();
+
+			// injection
+			registaDAO.setEntityManager(entityManager);
+
+			registaDAO.delete(registaDAO.findOne(idRegista).orElse(null));
+
+			//commit
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			//rollback se esito negativo
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+		
 
 	}
 

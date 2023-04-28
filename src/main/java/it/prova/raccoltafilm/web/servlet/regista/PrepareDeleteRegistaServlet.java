@@ -54,6 +54,6 @@ public class PrepareDeleteRegistaServlet extends HttpServlet {
 		}
 
 		request.getRequestDispatcher("/regista/delete.jsp").forward(request, response);
-	}
 
+}
 }
