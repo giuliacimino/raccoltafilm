@@ -36,7 +36,7 @@ public class PrepareDeleteRegistaServlet extends HttpServlet {
 		}
 
 		try {
-			Regista registaInstance = registaService.caricaSingoloElemento(Long.parseLong(idRegistaParam));
+			Regista registaInstance = registaService.caricaSingoloElementoConFilms(Long.parseLong(idRegistaParam));
 
 			if (registaInstance == null) {
 				// qui serve il percorso assoluto in quanto siamo in un sottopercorso /admin/
@@ -54,6 +54,5 @@ public class PrepareDeleteRegistaServlet extends HttpServlet {
 		}
 
 		request.getRequestDispatcher("/regista/delete.jsp").forward(request, response);
-
-}
+	}
 }

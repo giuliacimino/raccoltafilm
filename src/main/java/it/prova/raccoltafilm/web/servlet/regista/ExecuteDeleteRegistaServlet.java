@@ -30,34 +30,25 @@ public class ExecuteDeleteRegistaServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String idRegistaToDelete = request.getParameter("idRegistaDelete");
 
-		if (!NumberUtils.isCreatable(idRegistaToDelete)) {
-			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
+		String idRegistaParam = request.getParameter("idRegista");
+		if (!NumberUtils.isCreatable(idRegistaParam)) {
 			response.sendRedirect(request.getContextPath() + "/home?operationResult=ERROR");
 			return;
 		}
+		Long idRegista = Long.parseLong(idRegistaParam);
 		try {
-			// novità rispetto al passato: abbiamo un overload di rimuovi che agisce per id
-			// in questo modo spostiamo la logica di caricamento/rimozione nel service
-			// usando la stessa finestra di transazione e non aprendo e chiudendo due volte
-			// inoltre mi torna utile quando devo fare rimozioni eager
-			registaService.rimuovi(Long.parseLong(idRegistaToDelete));
-		} catch (ElementNotFoundException e) {
-			response.sendRedirect(request.getContextPath() + "/ExecuteListRegistaServlet?operationResult=NOT_FOUND");
-			return; 
-		}catch (RegistaHasFilmException e) {
+
+			registaService.rimuovi(idRegista);
+		} catch (RegistaHasFilmException ex) {
 			response.sendRedirect(request.getContextPath() + "/ExecuteListRegistaServlet?operationResult=NOT_VALID");
 			return;
 		} catch (Exception e) {
-			// qui ci andrebbe un messaggio nei file di log costruito ad hoc se fosse attivo
 			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + "/home?operationResult=ERROR");
 			return;
 		}
 
-		response.sendRedirect("ExecuteListRegistaServlet?operationResult=SUCCESS");
+		response.sendRedirect(request.getContextPath() +"/ExecuteListRegistaServlet?operationResult=SUCCESS");
 	}
-	
 }
