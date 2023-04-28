@@ -125,7 +125,7 @@
 
 				<div class='card-footer'>
 					<form
-						action="${pageContext.request.contextPath}/admin/ExecuteDeleteRegistaServlet"
+						action="${pageContext.request.contextPath}/ExecuteDeleteRegistaServlet"
 						method="post">
 						<input type="hidden" name="idRegista"
 							value="${delete_regista_attr.id}">
