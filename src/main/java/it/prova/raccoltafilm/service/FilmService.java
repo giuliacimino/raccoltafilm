@@ -19,6 +19,7 @@ public interface FilmService {
 	public void rimuovi(Long idFilmToRemove) throws Exception;
 
 	public List<Film> findByExample(Film example) throws Exception;
+	
 
 	// per injection
 	public void setFilmDAO(FilmDAO filmDAO);
